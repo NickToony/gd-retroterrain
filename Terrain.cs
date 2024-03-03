@@ -16,6 +16,8 @@ partial class Terrain : MeshInstance3D
 
     [Export] public bool ShouldUpdate = true;
 
+    [Export] public bool Smooth = false;
+
     private Vector3[] _coords;
 
     public override void _Ready()
@@ -136,6 +138,10 @@ partial class Terrain : MeshInstance3D
                 {
                     surfaceTool.SetUV(corner.UV);
                     surfaceTool.SetColor(VertexColor(corner.Vertex.Y));
+                    if (!Smooth)
+                    {
+                        surfaceTool.SetSmoothGroup(uint.MaxValue);
+                    }
                     surfaceTool.AddVertex(corner.Vertex);
                 }
             }
