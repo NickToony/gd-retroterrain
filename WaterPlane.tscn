@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dogy0ka7ryipf"]
+
+[ext_resource type="Material" uid="uid://bvuev1auwuaiv" path="res://WaterPlane.tres" id="1_p5c1e"]
+[ext_resource type="Script" path="res://WaterPlane.cs" id="2_qw1is"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_pgxkq"]
+size = Vector2(100, 100)
+subdivide_width = 200
+subdivide_depth = 200
+orientation = 1
+
+[node name="WaterPlane" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("QuadMesh_pgxkq")
+surface_material_override/0 = ExtResource("1_p5c1e")
+script = ExtResource("2_qw1is")
