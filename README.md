@@ -6,10 +6,13 @@ This implementation is based on the fantastic tutorial by Eric Schubert. Please 
 
 <img src="/screenshots/orthogonal_retro.png?raw=true" width="100%" />
 <p float="left" align="middle">
-  <img src="/screenshots/perspective_retro.png?raw=true" width="33%" />
-  <img src="/screenshots/orthogonal.png?raw=true" width="33%" />
-  <img src="/screenshots/perspective.png?raw=true" width="33%" />
+  <img src="/screenshots/perspective_retro.png?raw=true" width="45%" />
+  <img src="/screenshots/orthogonal.png?raw=true" width="45%" />
 </p>
+<p float="left" align="middle">
+   <img src="/screenshots/perspective.png?raw=true" width="45%" />
+</p>
+
 
 ## Features
 - Generation of terrain mesh and normals
