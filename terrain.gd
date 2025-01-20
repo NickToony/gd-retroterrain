@@ -14,7 +14,7 @@ var coords : Array[Vector3] = []
 func _ready() -> void:
     should_update = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     if should_update:
         generate_coords()
         should_update = false
@@ -106,10 +106,10 @@ func generate_mesh() -> void:
     mesh = array_mesh
 
     var shader := ShaderMaterial.new()
-    shader.shader = load("res://terrain.gdshader");
-    shader.set_shader_parameter("grassTexture", load("res://grass.jpg"));
-    shader.set_shader_parameter("rockTexture", load("res://rock.jpg"));
-    shader.set_shader_parameter("sandTexture", load("res://sand.jpg"));
+    shader.shader = load("res://shaders/terrain.gdshader");
+    shader.set_shader_parameter("grassTexture", load("res://assets/grass.jpg"));
+    shader.set_shader_parameter("rockTexture", load("res://assets/rock.jpg"));
+    shader.set_shader_parameter("sandTexture", load("res://assets/sand.jpg"));
     shader.set_shader_parameter("lineThickness", 0.02);
     shader.set_shader_parameter("lineVisibility", 0.5);
     mesh.surface_set_material(0, shader);
