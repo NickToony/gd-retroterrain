@@ -1,6 +1,6 @@
 # Godot RetroTerrain
 
-An example of how to build terrain similar to old strategy or management games, like _Rollercoaster Tycoon_. It also includes a water shader and basic terrain generation. Rewritten for *Godot 4.3* and *GDScript*!
+An example of how to build terrain similar to old strategy or management games, like _Rollercoaster Tycoon_. It also includes a water shader and basic terrain generation. Rewritten for **Godot 4.3** and **GDScript**!
 
 This implementation is based on the fantastic tutorial by Eric Schubert. Please watch the video for a full guide on how this works (linked below).
 
@@ -11,6 +11,7 @@ This implementation is based on the fantastic tutorial by Eric Schubert. Please 
 </p>
 <p float="left" align="middle">
    <img src="/screenshots/overview.png?raw=true" width="45%" />
+   <img src="/screenshots/smooth_fps_grid.png?raw=true" width="45%" />
 </p>
 
 
