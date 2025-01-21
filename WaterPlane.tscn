@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmvqtrxe3klxe"]
+
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="1_fay6q"]
+[ext_resource type="Script" path="res://WaterPlane.gd" id="2_r1r5a"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_senhm"]
+noise_type = 3
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_71h1u"]
+seamless = true
+as_normal_map = true
+bump_strength = 5.0
+noise = SubResource("FastNoiseLite_senhm")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tpevt"]
+noise_type = 3
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pttm7"]
+seamless = true
+as_normal_map = true
+bump_strength = 5.0
+noise = SubResource("FastNoiseLite_tpevt")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nwab4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q042o"]
+seamless = true
+noise = SubResource("FastNoiseLite_nwab4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_okayy"]
+render_priority = 0
+shader = ExtResource("1_fay6q")
+shader_parameter/albedo = Color(0.0242725, 0.378493, 0.523186, 1)
+shader_parameter/albedo2 = Color(0.109988, 0.269999, 0.389448, 1)
+shader_parameter/color_deep = Color(0, 0.2, 0.27451, 1)
+shader_parameter/color_shallow = Color(0, 0.419608, 0.556863, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.02
+shader_parameter/wave_direction = Vector2(8, 0)
+shader_parameter/wave_direction2 = Vector2(0, 4)
+shader_parameter/time_scale = 0.025
+shader_parameter/noise_scale = 10.0
+shader_parameter/height_scale = 0.15
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
+shader_parameter/edge_scale = 0.2
+shader_parameter/near = 0.5
+shader_parameter/far = 1000.0
+shader_parameter/edge_color = Color(1, 1, 1, 1)
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_71h1u")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_pttm7")
+shader_parameter/wave = SubResource("NoiseTexture2D_q042o")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gcc3a"]
+material = SubResource("ShaderMaterial_okayy")
+subdivide_width = 200
+subdivide_depth = 200
+orientation = 1
+
+[node name="WaterPlane" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_gcc3a")
+script = ExtResource("2_r1r5a")

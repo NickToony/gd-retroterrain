@@ -1,4 +1,3 @@
-@tool
 extends MeshInstance3D
 
 @export var size : Vector2i = Vector2i(10, 10)
@@ -9,12 +8,28 @@ extends MeshInstance3D
 
 @export var smooth : bool = true
 
+@export var grid : bool = true
+
+@export var edge_height : float = -2.5
+
 var coords : Array[Vector3] = []
 
 func _ready() -> void:
     should_update = true
 
 func _process(_delta: float) -> void:
+    if Input.is_action_just_pressed("toggle_smooth"):
+        smooth = !smooth
+        should_update = true
+
+    if Input.is_action_just_pressed("toggle_grid"):
+        grid = !grid
+        should_update = true
+    
+    if Input.is_action_just_pressed("toggle_regen"):
+        noise.seed = randi()
+        should_update = true
+
     if should_update:
         generate_coords()
         should_update = false
@@ -26,6 +41,10 @@ func generate_coords() -> void:
             # Sample a smoothed noise value
             var y = noise.get_noise_2d(x, z) * 15;
             y = floor(y) / 2.0
+
+            if x == 0 or x == size.x-1 or z == 0 or z == size.y-1:
+                y = edge_height
+
             coords[x * size.y + z] = Vector3(x, y, z)
 
     generate_mesh()
@@ -111,7 +130,7 @@ func generate_mesh() -> void:
     shader.set_shader_parameter("rockTexture", load("res://assets/rock.jpg"));
     shader.set_shader_parameter("sandTexture", load("res://assets/sand.jpg"));
     shader.set_shader_parameter("lineThickness", 0.02);
-    shader.set_shader_parameter("lineVisibility", 0.5);
+    shader.set_shader_parameter("lineVisibility", 0.5 if grid else 0.0);
     mesh.surface_set_material(0, shader);
 
 func triangulation_check(coord0: Vector3, coord1: Vector3) -> bool:

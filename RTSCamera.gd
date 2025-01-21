@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
         size += zoom_speed * delta
     if Input.is_action_pressed("camera_zoom_out"):
         size -= zoom_speed * delta
-    size = clamp(size, 10, 100)
+    size = clamp(size, 10, 150)
 
 func enable() -> void:
     visible = true

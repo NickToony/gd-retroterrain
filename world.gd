@@ -4,6 +4,7 @@ extends Node3D
 
 @onready var camera_rts := $RTSCamera
 @onready var camera_fps := $FPSCamera
+@onready var water_plane := $WaterPlane
 
 func _ready() -> void:
 	update()
@@ -15,6 +16,7 @@ func update():
 	else:
 		camera_rts.disable()
 		camera_fps.enable()
+	water_plane.set_perspective(!rts_mode)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
