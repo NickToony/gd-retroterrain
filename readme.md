@@ -1,4 +1,4 @@
-# Godot RetroTerrain
+# Godot RetroTerrain (GDScript)
 
 An example of how to build terrain similar to old strategy or management games, like _Rollercoaster Tycoon_. It also includes a water shader and basic terrain generation. Rewritten for **Godot 4.3** and **GDScript**!
 
