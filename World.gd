@@ -7,18 +7,21 @@ extends Node3D
 @onready var water_plane := $WaterPlane
 
 func _ready() -> void:
-	update()
+	update_cameras()
 
-func update():
+func update_cameras():
 	if rts_mode:
 		camera_rts.enable()
 		camera_fps.disable()
 	else:
 		camera_rts.disable()
 		camera_fps.enable()
+	
+	# Because the water shader depends on the camera far value, we must adjust our edge threshold
 	water_plane.set_perspective(!rts_mode)
 
 func _process(_delta: float) -> void:
+	# Toggle between camera modes
 	if Input.is_action_just_pressed("ui_accept"):
 		rts_mode = !rts_mode
-		update()
+		update_cameras()
