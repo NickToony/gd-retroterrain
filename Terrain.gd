@@ -1,3 +1,4 @@
+@tool
 extends MeshInstance3D
 
 # This is the important file of the demo!
@@ -18,8 +19,8 @@ extends MeshInstance3D
 # Flag to toggle the grid visibility
 @export var grid : bool = true
 
-# The height to force the edge of the map to be. Creates cliffs around the map.
-@export var edge_height : float = -2.5
+# Water plane object - will be moved/scaled to fit the map. We also try to keep edges at the same height as the water plane.
+@export var water_plane : Node3D
 
 var coords : Array[Vector3] = []
 
@@ -28,20 +29,21 @@ func _ready() -> void:
     should_update = true
 
 func _process(_delta: float) -> void:
-    # Toggle smoothing, requies a regen of the normal maps
-    if Input.is_action_just_pressed("toggle_smooth"):
-        smooth = !smooth
-        should_update = true
+    if !Engine.is_editor_hint():
+        # Toggle smoothing, requies a regen of the normal maps
+        if Input.is_action_just_pressed("toggle_smooth"):
+            smooth = !smooth
+            should_update = true
 
-    # Toggle grid visibility by adjusting shader parameter. Does't really require a regen.
-    if Input.is_action_just_pressed("toggle_grid"):
-        grid = !grid
-        should_update = true
-    
-    # Regenerate the terrain mesh with a new seed
-    if Input.is_action_just_pressed("toggle_regen"):
-        noise.seed = randi()
-        should_update = true
+        # Toggle grid visibility by adjusting shader parameter. Does't really require a regen.
+        if Input.is_action_just_pressed("toggle_grid"):
+            grid = !grid
+            should_update = true
+        
+        # Regenerate the terrain mesh with a new seed
+        if Input.is_action_just_pressed("toggle_regen"):
+            noise.seed = randi()
+            should_update = true
 
     if should_update:
         # Generate the map mesh, normals, and assign the shader
@@ -60,13 +62,17 @@ func generate_coords() -> void:
             y = floor(y) / 2.0
 
             # If we're on the edge, force the height to be the edge height
-            if x == 0 or x == size.x-1 or z == 0 or z == size.y-1:
-                y = edge_height
+            if water_plane && (x == 0 or x == size.x-1 or z == 0 or z == size.y-1):
+                y = water_plane.position.y - 0.5
 
             # Store the height in the array
             coords[x * size.y + z] = Vector3(x, y, z)
 
     generate_mesh()
+
+    if water_plane:
+        water_plane.set_position(Vector3((size.x-1) / 2.0, water_plane.position.y, (size.y-1) / 2.0))
+        water_plane.scale = Vector3(size.x + 1, 1, size.y + 1)
 
 func vertex_color(height: float) -> Color:
     # The terrain shader is very basic - it changes texture based on the colour of the vertex
